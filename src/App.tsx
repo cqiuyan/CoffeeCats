@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Selector } from "./screens/Selector";
 import { Interact } from "./screens/Interact";
 import { CATS, CatConfig } from "./config/cats";
@@ -10,6 +10,22 @@ export default function App() {
   const [cats, setCats] = useState(CATS);
   const [currency, setCurrency] = useState(1339);
   const [selectedCat, setSelectedCat] = useState<CatConfig | null>(null);
+
+  // Decrease health for all unlocked cats over time
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCats((prevCats) =>
+        prevCats.map((cat) => {
+          if (cat.unlocked && cat.health > 0) {
+            return { ...cat, health: Math.max(0, cat.health - 0.5) };
+          }
+          return cat;
+        })
+      );
+    }, 500); // Decrease every 500ms (less frequent updates)
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleCatClick = useCallback((cat: CatConfig) => {
     if (cat.unlocked) {
@@ -41,8 +57,9 @@ export default function App() {
       )}
       {screen === "interact" && selectedCat && (
         <Interact
-          cat={selectedCat}
+          cat={cats.find(c => c.id === selectedCat.id) || selectedCat}
           currency={currency}
+          setCurrency={setCurrency}
           onBack={handleBack}
           onHealthChange={handleHealthChange}
         />

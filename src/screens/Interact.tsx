@@ -12,6 +12,7 @@ import svgPaths from "../imports/svg-xfnbgzbzvt";
 interface InteractProps {
   cat: CatConfig;
   currency: number;
+  setCurrency: React.Dispatch<React.SetStateAction<number>>;
   onBack: () => void;
   onHealthChange: (catId: number, health: number) => void;
 }
@@ -23,15 +24,16 @@ interface ToolConfig {
   name: string;
   component: React.ComponentType<any>;
   bgColor: string;
+  cost: number;
 }
 
 const TOOLS: ToolConfig[] = [
-  { type: "yarn", name: "Yarn", component: Yarn, bgColor: "#fffbd1" },
-  { type: "toy", name: "Toy", component: Toy, bgColor: "#f5e9bc" },
-  { type: "water", name: "Water", component: Water, bgColor: "#fffbd1" },
-  { type: "food", name: "Food", component: Food, bgColor: "#f5e9bc" },
-  { type: "catnip", name: "Catnip", component: Catnip, bgColor: "#fffbd1" },
-  { type: "poop", name: "Poop", component: Poop, bgColor: "#f5e9bc" },
+  { type: "yarn", name: "Yarn", component: Yarn, bgColor: "#fffbd1", cost: 1 },
+  { type: "toy", name: "Toy", component: Toy, bgColor: "#f5e9bc", cost: 2 },
+  { type: "water", name: "Water", component: Water, bgColor: "#fffbd1", cost: 3 },
+  { type: "food", name: "Food", component: Food, bgColor: "#f5e9bc", cost: 4 },
+  { type: "catnip", name: "Catnip", component: Catnip, bgColor: "#fffbd1", cost: 5 },
+  { type: "poop", name: "Poop", component: Poop, bgColor: "#f5e9bc", cost: 6 },
 ];
 
 function Group() {
@@ -91,19 +93,20 @@ function Group1() {
   );
 }
 
-function ActiveItem() {
+function ActiveItem({ tool }: { tool: ToolType }) {
+  const ToolComponent = TOOLS.find((t) => t.type === tool)?.component || Yarn;
+  
   return (
     <div 
       style={{ position: 'absolute', overflow: 'clip', height: '124px', left: '29.72px', top: '89.69px', width: '113px' }}
       data-name="Active Item"
     >
-      <Group />
-      <Group1 />
+      <ToolComponent />
     </div>
   );
 }
 
-export function Interact({ cat, currency, onBack, onHealthChange }: InteractProps) {
+export function Interact({ cat, currency, setCurrency, onBack, onHealthChange }: InteractProps) {
   const [currentTool, setCurrentTool] = useState<ToolType>("yarn");
   const [isDragging, setIsDragging] = useState(false);
   const [draggedTool, setDraggedTool] = useState<ToolType | null>(null);
@@ -111,27 +114,16 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
   const [health, setHealth] = useState(cat.health);
   const catRef = useRef<HTMLDivElement>(null);
 
-  // Select random tool when component mounts or health changes
+  // Sync health from prop (parent controls health decrease globally)
+  useEffect(() => {
+    setHealth(cat.health);
+  }, [cat.health]);
+
+  // Select random tool when component mounts
   useEffect(() => {
     const randomTool = TOOLS[Math.floor(Math.random() * TOOLS.length)];
     setCurrentTool(randomTool.type);
-  }, [health]);
-
-  // Decrease health over time
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHealth((prev) => {
-        const newHealth = Math.max(0, prev - 0.1);
-        // Sync to parent but avoid render-phase warnings
-        requestAnimationFrame(() => {
-          onHealthChange(cat.id, newHealth);
-        });
-        return newHealth;
-      });
-    }, 100); // Decrease every 100ms
-
-    return () => clearInterval(interval);
-  }, [cat.id, onHealthChange]);
+  }, []);
 
   const handleMouseDown = (toolType: ToolType, e: React.MouseEvent) => {
     e.preventDefault();
@@ -161,9 +153,22 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
       ) {
         // Check if correct tool
         if (draggedTool === currentTool) {
-          const newHealth = Math.min(100, health + 10);
-          setHealth(newHealth);
-          onHealthChange(cat.id, newHealth);
+          const toolConfig = TOOLS.find(t => t.type === draggedTool);
+          if (toolConfig && currency >= toolConfig.cost) {
+            // Deduct cost
+            setCurrency(prev => prev - toolConfig.cost);
+            
+            // Increase health - parent will update the state
+            const newHealth = Math.min(100, health + 10);
+            onHealthChange(cat.id, newHealth);
+            
+            // Change to a new random tool after successful use
+            const availableTools = TOOLS.filter(t => t.type !== currentTool);
+            const randomTool = availableTools[Math.floor(Math.random() * availableTools.length)];
+            setCurrentTool(randomTool.type);
+          } else if (toolConfig && currency < toolConfig.cost) {
+            alert(`Not enough coins! You need ${toolConfig.cost} coins to use ${toolConfig.name}.`);
+          }
         }
       }
     }
@@ -178,6 +183,22 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
 
   const getHealthBarWidth = (health: number) => {
     return (health / 100) * 376.799;
+  };
+
+  const getThoughtBubbleColor = (health: number) => {
+    // Interpolate from vibrant red (0) to vibrant green (100)
+    const red = Math.round(255 - (health / 100) * 180);
+    const green = Math.round(50 + (health / 100) * 205);
+    const blue = Math.round(30 - (health / 100) * 30);
+    return `rgb(${red}, ${green}, ${blue})`;
+  };
+
+  const getThoughtBubbleEmoji = (health: number) => {
+    if (health >= 80) return "😸"; // Very happy
+    if (health >= 60) return "😊"; // Happy
+    if (health >= 40) return "😐"; // Neutral
+    if (health >= 20) return "😿"; // Sad
+    return "😢"; // Very sad
   };
 
   const CatComponent = cat.component;
@@ -195,7 +216,7 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
       </div>
 
       {/* Active Tool Indicator - Top Left */}
-      <ActiveItem />
+      <ActiveItem tool={currentTool} />
 
       {/* Currency Display */}
       <div 
@@ -213,7 +234,7 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
       {/* Back Button */}
       <button
         onClick={onBack}
-        style={{ position: 'absolute', backgroundColor: '#f9e39f', borderRadius: '30px', paddingLeft: '20px', paddingRight: '20px', paddingTop: '10px', paddingBottom: '10px', fontWeight: 'bold', left: '26px', top: '160px', fontSize: '20px', border: 'none', cursor: 'pointer' }}
+        style={{ position: 'absolute', backgroundColor: '#f9e39f', borderRadius: '30px', paddingLeft: '20px', paddingRight: '20px', paddingTop: '10px', paddingBottom: '10px', fontWeight: 'bold', right: '26px', top: '25px', fontSize: '20px', border: 'none', cursor: 'pointer' }}
         onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f6d87c'; }}
         onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f9e39f'; }}
       >
@@ -228,6 +249,67 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
       >
         <div style={{ width: '100%', height: '100%' }}>
           <CatComponent />
+        </div>
+        
+        {/* Thought Bubble */}
+        <div 
+          style={{ 
+            position: 'absolute', 
+            top: '50px', 
+            left: 'calc(100% + 30px)', 
+            transform: 'translateY(-50%)',
+            backgroundColor: getThoughtBubbleColor(health),
+            borderRadius: '20px',
+            padding: '15px 20px',
+            fontSize: '40px',
+            transition: 'background-color 0.5s ease',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+            zIndex: 10
+          }}
+        >
+          {getThoughtBubbleEmoji(health)}
+          
+          {/* Speech bubble tail pointing left */}
+          <div 
+            style={{
+              position: 'absolute',
+              left: '-20px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: 0,
+              height: 0,
+              borderTop: '15px solid transparent',
+              borderBottom: '15px solid transparent',
+              borderRight: `20px solid ${getThoughtBubbleColor(health)}`,
+              transition: 'border-right-color 0.5s ease'
+            }}
+          />
+          
+          {/* Small bubble tail accent */}
+          <div 
+            style={{
+              position: 'absolute',
+              left: '-35px',
+              top: '60%',
+              width: '12px',
+              height: '12px',
+              borderRadius: '50%',
+              backgroundColor: getThoughtBubbleColor(health),
+              transition: 'background-color 0.5s ease'
+            }}
+          />
+          <div 
+            style={{
+              position: 'absolute',
+              left: '-48px',
+              top: '70%',
+              width: '8px',
+              height: '8px',
+              borderRadius: '50%',
+              backgroundColor: getThoughtBubbleColor(health),
+              transition: 'background-color 0.5s ease'
+            }}
+          />
         </div>
       </div>
 
@@ -257,16 +339,21 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
       >
         {TOOLS.map((tool, index) => {
           const ToolComponent = tool.component;
+          const canAfford = currency >= tool.cost;
           return (
             <div
               key={tool.type}
-              style={{ flexBasis: 0, flexGrow: 1, position: 'relative', borderRadius: '26px', flexShrink: 0, cursor: 'grab', backgroundColor: tool.bgColor, height: '161px', minHeight: '1px', minWidth: '85px' }}
-              onMouseDown={(e) => handleMouseDown(tool.type, e)}
+              style={{ flexBasis: 0, flexGrow: 1, position: 'relative', borderRadius: '26px', flexShrink: 0, cursor: canAfford ? 'grab' : 'not-allowed', backgroundColor: tool.bgColor, height: '161px', minHeight: '1px', minWidth: '85px', opacity: canAfford ? 1 : 0.5 }}
+              onMouseDown={(e) => canAfford && handleMouseDown(tool.type, e)}
             >
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'clip', borderRadius: 'inherit', width: '100%', height: '100%' }}>
                 <div style={{ boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '10px', position: 'relative', width: '100%', gap: '10px', height: '161px' }}>
                   <ToolComponent />
                 </div>
+              </div>
+              {/* Cost Label */}
+              <div style={{ position: 'absolute', bottom: '5px', left: '50%', transform: 'translateX(-50%)', backgroundColor: canAfford ? '#f9e39f' : '#ffcccc', borderRadius: '10px', padding: '2px 8px', fontSize: '12px', fontWeight: 'bold', color: 'black' }}>
+                {tool.cost}
               </div>
             </div>
           );
@@ -291,3 +378,4 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
     </div>
   );
 }
+

@@ -13,7 +13,7 @@ interface SelectorProps {
 }
 
 export function Selector({ cats, currency, setCats, setCurrency, onCatClick }: SelectorProps) {
-  const handleCatClick = (cat: CatConfig) => {
+  const handleCatClick = React.useCallback((cat: CatConfig) => {
     if (cat.unlocked) {
       // Already unlocked, show interact screen
       onCatClick(cat);
@@ -32,7 +32,7 @@ export function Selector({ cats, currency, setCats, setCurrency, onCatClick }: S
       // Not enough currency
       alert(`Not enough coins! You need ${cat.price} coins to unlock this cat.`);
     }
-  };
+  }, [currency, onCatClick, setCats, setCurrency]);
 
   const getCardBackgroundColor = (cat: CatConfig) => {
     return cat.unlocked ? "#fff8ea" : "#d2d2d2";
@@ -46,7 +46,7 @@ export function Selector({ cats, currency, setCats, setCurrency, onCatClick }: S
 
   const getHealthBarWidth = (health: number) => {
     if (health === 0) return 0;
-    return (health / 100) * 202; // 202px is the full width
+    return (health / 100) * 244; // 244px is the full width
   };
 
   const CatCard = ({ cat, position }: { cat: CatConfig; position: { left: number; top: number } }) => {
