@@ -2,8 +2,8 @@ import svgPaths from "../../imports/svg-xfnbgzbzvt";
 
 export function Poop() {
   return (
-    <div className="h-[110px] relative shrink-0 w-[125px]" data-name="Poop">
-      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 125 110">
+    <div style={{ height: '110px', position: 'relative', flexShrink: 0, width: '125px' }} data-name="Poop">
+      <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 125 110">
         <g clipPath="url(#clip0_poop)" id="Poop">
           <path d={svgPaths.p2a037400} fill="var(--fill-0, #060808)" id="Vector" />
           <path d={svgPaths.p39edaa00} fill="var(--fill-0, #F6F3F4)" id="Vector_2" />

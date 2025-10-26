@@ -2,8 +2,8 @@ import svgPaths from "../../imports/svg-xfnbgzbzvt";
 
 export function Water() {
   return (
-    <div className="h-[61px] relative shrink-0 w-[119px]" data-name="Water">
-      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 119 61">
+    <div style={{ height: '61px', position: 'relative', flexShrink: 0, width: '119px' }} data-name="Water">
+      <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 119 61">
         <g clipPath="url(#clip0_water)" id="Water">
           <path d={svgPaths.p197449f0} fill="var(--fill-0, #967C65)" id="Vector" />
           <path d={svgPaths.p24281280} fill="var(--fill-0, #A7A9AC)" id="Vector_2" />

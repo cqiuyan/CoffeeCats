@@ -2,8 +2,8 @@ import svgPaths from "../../imports/svg-xfnbgzbzvt";
 
 export function Catnip() {
   return (
-    <div className="h-[110px] relative shrink-0 w-[109px]" data-name="Catnip">
-      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 109 110">
+    <div style={{ height: '110px', position: 'relative', flexShrink: 0, width: '109px' }} data-name="Catnip">
+      <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 109 110">
         <g clipPath="url(#clip0_catnip)" id="Catnip">
           <path d={svgPaths.p3903e680} fill="var(--fill-0, #F9F1E8)" id="Vector" />
           <path d={svgPaths.p12ae8780} fill="var(--fill-0, #5A8E3F)" id="Vector_2" />

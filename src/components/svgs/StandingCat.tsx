@@ -3,7 +3,7 @@ import svgPaths from "../../imports/svg-3sda4a3juu";
 
 export function StandingCat() {
   return (
-    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 186 239">
+    <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 186 239">
       <g clipPath="url(#clip0_standing)" id="Layer_1">
         <path d={svgPaths.p19da8800} fill="var(--fill-0, #060606)" id="Vector" />
         <path d={svgPaths.p375e4800} fill="var(--fill-0, #60594C)" id="Vector_2" />

@@ -3,7 +3,7 @@ import svgPaths from "../../imports/svg-3sda4a3juu";
 
 export function SpotCat() {
   return (
-    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 182 251">
+    <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 182 251">
       <g clipPath="url(#clip0_spotcat)" id="spot cat">
         <g id="Vector">
           <path d={svgPaths.p39185500} fill="var(--fill-0, #60594C)" />

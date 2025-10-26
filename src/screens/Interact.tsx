@@ -36,8 +36,8 @@ const TOOLS: ToolConfig[] = [
 
 function Group() {
   return (
-    <div className="absolute inset-[0.84%_4.42%_13.78%_2.6%]" data-name="Group">
-      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 106 106">
+    <div style={{ position: 'absolute', top: '0.84%', right: '4.42%', bottom: '13.78%', left: '2.6%' }} data-name="Group">
+      <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 106 106">
         <g id="Group">
           <path d={svgPaths.p38514280} fill="var(--fill-0, #E4509C)" id="Vector" />
           <path d={svgPaths.p2baade00} fill="var(--fill-0, #E4509C)" id="Vector_2" />
@@ -59,8 +59,8 @@ function Group() {
 
 function Group1() {
   return (
-    <div className="absolute bottom-[-0.02%] left-0 right-0 top-0" data-name="Group">
-      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 113 125">
+    <div style={{ position: 'absolute', bottom: '-0.02%', left: 0, right: 0, top: 0 }} data-name="Group">
+      <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 113 125">
         <g id="Group">
           <path d={svgPaths.p180b8300} fill="var(--fill-0, #F391BC)" id="Vector" />
           <path d={svgPaths.p9b72200} fill="var(--fill-0, #F391BC)" id="Vector_2" />
@@ -94,8 +94,7 @@ function Group1() {
 function ActiveItem() {
   return (
     <div 
-      className="absolute overflow-clip" 
-      style={{ height: '124px', left: '29.72px', top: '89.69px', width: '113px' }}
+      style={{ position: 'absolute', overflow: 'clip', height: '124px', left: '29.72px', top: '89.69px', width: '113px' }}
       data-name="Active Item"
     >
       <Group />
@@ -185,15 +184,14 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
 
   return (
     <div 
-      className="bg-white relative overflow-hidden"
-      style={{ width: '1280px', height: '832px' }}
+      style={{ backgroundColor: 'white', position: 'relative', overflow: 'hidden', width: '1280px', height: '832px' }}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
       {/* Background */}
-      <div className="absolute bg-[#fffbd1] left-0 overflow-clip top-0" style={{ width: '1280px', height: '832px' }}>
-        <div className="absolute bg-[#fff8ea] inset-0" />
+      <div style={{ position: 'absolute', backgroundColor: '#fffbd1', left: 0, overflow: 'clip', top: 0, width: '1280px', height: '832px' }}>
+        <div style={{ position: 'absolute', backgroundColor: '#fff8ea', top: 0, right: 0, bottom: 0, left: 0 }} />
       </div>
 
       {/* Active Tool Indicator - Top Left */}
@@ -201,23 +199,23 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
 
       {/* Currency Display */}
       <div 
-        className="absolute bg-[#f9e39f] box-border content-stretch flex gap-[10px] items-center justify-end overflow-clip p-[13px] rounded-[30px]" 
-        style={{ height: '44px', left: '26px', top: '25px', width: '122px' }}
+        style={{ position: 'absolute', backgroundColor: '#f9e39f', boxSizing: 'border-box', display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'flex-end', overflow: 'clip', padding: '13px', borderRadius: '30px', height: '44px', left: '26px', top: '25px', width: '122px' }}
         data-name="Coins"
       >
-        <p className="font-bold relative shrink-0 text-black text-nowrap whitespace-pre" style={{ fontSize: '25px' }}>{currency}</p>
+        <p style={{ fontWeight: 'bold', position: 'relative', flexShrink: 0, color: 'black', whiteSpace: 'pre', fontSize: '25px' }}>{currency}</p>
       </div>
 
       {/* Coin Icon */}
-      <div className="absolute top-[30px]" style={{ left: '37px', width: '34px', height: '34px' }} data-name="Layer_1">
+      <div style={{ position: 'absolute', top: '30px', left: '37px', width: '34px', height: '34px' }} data-name="Layer_1">
         <CoinIcon />
       </div>
 
       {/* Back Button */}
       <button
         onClick={onBack}
-        className="absolute bg-[#f9e39f] rounded-[30px] px-[20px] py-[10px] font-bold hover:bg-[#f6d87c] transition-colors"
-        style={{ left: '26px', top: '160px', fontSize: '20px' }}
+        style={{ position: 'absolute', backgroundColor: '#f9e39f', borderRadius: '30px', paddingLeft: '20px', paddingRight: '20px', paddingTop: '10px', paddingBottom: '10px', fontWeight: 'bold', left: '26px', top: '160px', fontSize: '20px', border: 'none', cursor: 'pointer' }}
+        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f6d87c'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f9e39f'; }}
       >
         ← Back
       </button>
@@ -225,8 +223,7 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
       {/* Cat */}
       <div
         ref={catRef}
-        className="absolute top-[42.83px]"
-        style={{ height: '490px', left: '50%', transform: 'translateX(-50%)', width: '355px' }}
+        style={{ position: 'absolute', top: '42.83px', height: '490px', left: '50%', transform: 'translateX(-50%)', width: '355px' }}
         data-name="spot cat"
       >
         <div style={{ width: '100%', height: '100%' }}>
@@ -236,15 +233,15 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
 
       {/* Health Bar Background */}
       <div 
-        className="absolute bg-[#d9d9d9] rounded-[15.443px]" 
-        style={{ height: '20.075px', left: '463.09px', top: '561.88px', width: '376.799px' }}
+        style={{ position: 'absolute', backgroundColor: '#d9d9d9', borderRadius: '15.443px', height: '20.075px', left: '463.09px', top: '561.88px', width: '376.799px' }}
         data-name="Health Gray" 
       />
       
       {/* Health Bar Fill */}
       <div
-        className="absolute rounded-[15.443px]"
         style={{
+          position: 'absolute',
+          borderRadius: '15.443px',
           height: '20.075px',
           left: '464.7px',
           top: '561.88px',
@@ -256,20 +253,18 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
 
       {/* Tools Bar */}
       <div 
-        className="absolute bg-[#f9e39f] box-border content-end flex flex-wrap items-end justify-end overflow-clip p-[13px] rounded-[30px]" 
-        style={{ gap: '14px', height: '187px', left: '26px', top: '611px', width: '1228px' }}
+        style={{ position: 'absolute', backgroundColor: '#f9e39f', boxSizing: 'border-box', display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'flex-end', overflow: 'clip', padding: '13px', borderRadius: '30px', gap: '14px', height: '187px', left: '26px', top: '611px', width: '1228px' }}
       >
         {TOOLS.map((tool, index) => {
           const ToolComponent = tool.component;
           return (
             <div
               key={tool.type}
-              className="basis-0 grow relative rounded-[26px] shrink-0 cursor-grab active:cursor-grabbing"
-              style={{ backgroundColor: tool.bgColor, height: '161px', minHeight: '1px', minWidth: '85px' }}
+              style={{ flexBasis: 0, flexGrow: 1, position: 'relative', borderRadius: '26px', flexShrink: 0, cursor: 'grab', backgroundColor: tool.bgColor, height: '161px', minHeight: '1px', minWidth: '85px' }}
               onMouseDown={(e) => handleMouseDown(tool.type, e)}
             >
-              <div className="flex flex-col items-center justify-center overflow-clip rounded-[inherit]" style={{ width: '100%', height: '100%' }}>
-                <div className="box-border content-stretch flex flex-col items-center justify-center p-[10px] relative w-full" style={{ gap: '10px', height: '161px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'clip', borderRadius: 'inherit', width: '100%', height: '100%' }}>
+                <div style={{ boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '10px', position: 'relative', width: '100%', gap: '10px', height: '161px' }}>
                   <ToolComponent />
                 </div>
               </div>
@@ -281,8 +276,10 @@ export function Interact({ cat, currency, onBack, onHealthChange }: InteractProp
       {/* Dragged Tool */}
       {isDragging && draggedTool && (
         <div
-          className="pointer-events-none fixed z-50"
           style={{
+            pointerEvents: 'none',
+            position: 'fixed',
+            zIndex: 50,
             left: `${dragPosition.x - 50}px`,
             top: `${dragPosition.y - 50}px`,
             opacity: 0.7,

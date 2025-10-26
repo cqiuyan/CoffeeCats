@@ -2,8 +2,8 @@ import svgPaths from "../../imports/svg-xfnbgzbzvt";
 
 function Group() {
   return (
-    <div className="absolute inset-[0.84%_4.42%_13.78%_2.6%]" data-name="Group">
-      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 106 106">
+    <div style={{ position: 'absolute', top: '0.84%', right: '4.42%', bottom: '13.78%', left: '2.6%' }} data-name="Group">
+      <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 106 106">
         <g id="Group">
           <path d={svgPaths.p38514280} fill="var(--fill-0, #E4509C)" id="Vector" />
           <path d={svgPaths.p2baade00} fill="var(--fill-0, #E4509C)" id="Vector_2" />
@@ -25,8 +25,8 @@ function Group() {
 
 function Group1() {
   return (
-    <div className="absolute bottom-[-0.02%] left-0 right-0 top-0" data-name="Group">
-      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 113 125">
+    <div style={{ position: 'absolute', bottom: '-0.02%', left: 0, right: 0, top: 0 }} data-name="Group">
+      <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 113 125">
         <g id="Group">
           <path d={svgPaths.p180b8300} fill="var(--fill-0, #F391BC)" id="Vector" />
           <path d={svgPaths.p9b72200} fill="var(--fill-0, #F391BC)" id="Vector_2" />
@@ -59,7 +59,7 @@ function Group1() {
 
 export function Yarn() {
   return (
-    <div className="h-[124px] overflow-clip relative shrink-0 w-[113px]" data-name="Yarn">
+    <div style={{ height: '124px', overflow: 'clip', position: 'relative', flexShrink: 0, width: '113px' }} data-name="Yarn">
       <Group />
       <Group1 />
     </div>

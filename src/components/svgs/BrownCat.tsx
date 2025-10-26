@@ -3,7 +3,7 @@ import svgPaths from "../../imports/svg-3sda4a3juu";
 
 export function BrownCat() {
   return (
-    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 244 221">
+    <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 244 221">
       <g clipPath="url(#clip0_brown)" id="Layer_3">
         <path d={svgPaths.pb01fc00} fill="var(--fill-0, #413019)" id="Vector" />
         <path d={svgPaths.pd950780} fill="var(--fill-0, #5A4E3E)" id="Vector_2" />

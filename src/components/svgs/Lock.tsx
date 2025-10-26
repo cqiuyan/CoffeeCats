@@ -3,7 +3,7 @@ import svgPaths from "../../imports/svg-3sda4a3juu";
 
 export function Lock() {
   return (
-    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 52 72">
+    <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 52 72">
       <g clipPath="url(#clip0_lock)" id="Layer_3">
         <path d={svgPaths.p396a7a00} fill="var(--fill-0, #FCCD0B)" id="Vector" />
         <path d={svgPaths.p35c56b00} fill="var(--fill-0, #F9B717)" id="Vector_2" />

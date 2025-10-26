@@ -3,7 +3,7 @@ import svgPaths from "../../imports/svg-3sda4a3juu";
 
 export function Croissant() {
   return (
-    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 61 40">
+    <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 61 40">
       <g clipPath="url(#clip0_croissant)" id="Croissant">
         <path d={svgPaths.p856c0} fill="var(--fill-0, #DA7F29)" id="Vector" />
         <path d={svgPaths.p27febf00} fill="var(--fill-0, #F09D3A)" id="Vector_2" />

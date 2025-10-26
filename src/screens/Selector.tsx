@@ -56,21 +56,26 @@ export function Selector({ cats, currency, setCats, setCurrency, onCatClick }: S
 
     return (
       <div
-        className="absolute w-[321px] h-[321px] cursor-pointer"
-        style={{ left: `${position.left}px`, top: `${position.top}px` }}
+        style={{ 
+          position: 'absolute',
+          width: '321px',
+          height: '321px',
+          cursor: 'pointer',
+          left: `${position.left}px`,
+          top: `${position.top}px`
+        }}
         onClick={() => handleCatClick(cat)}
       >
         {/* Card Background */}
-        <div className="absolute bg-[#fffbd1] rounded-[20px] size-full overflow-hidden">
+        <div style={{ position: 'absolute', backgroundColor: '#fffbd1', borderRadius: '20px', width: '100%', height: '100%', overflow: 'hidden' }}>
           <div
-            className="absolute inset-0"
-            style={{ backgroundColor: getCardBackgroundColor(cat) }}
+            style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: getCardBackgroundColor(cat) }}
           />
 
           {/* Shadow SVG */}
           <div
-            className="absolute"
             style={{
+              position: 'absolute',
               left: `${shadowPos.left}px`,
               top: `${shadowPos.top}px`,
               width: `${shadowPos.width}px`,
@@ -82,8 +87,8 @@ export function Selector({ cats, currency, setCats, setCurrency, onCatClick }: S
 
           {/* Cat SVG */}
           <div
-            className="absolute"
             style={{
+              position: 'absolute',
               left: `${cat.catPosition.left}px`,
               top: `${cat.catPosition.top}px`,
               width: `${cat.catPosition.width}px`,
@@ -95,40 +100,44 @@ export function Selector({ cats, currency, setCats, setCurrency, onCatClick }: S
 
           {/* Food Icon */}
           {cat.unlocked && (
-            <div className="absolute h-[40px] left-[18.97px] top-[18.68px] w-[61px]">
+            <div style={{ position: 'absolute', height: '40px', left: '18.97px', top: '18.68px', width: '61px' }}>
               <FoodComponent />
             </div>
           )}
 
           {/* Lock Icon (if locked) */}
           {!cat.unlocked && (
-            <div className="absolute h-[72px] left-[17px] top-[16px] w-[52px]">
+            <div style={{ position: 'absolute', height: '72px', left: '17px', top: '16px', width: '52px' }}>
               <Lock />
             </div>
           )}
 
           {/* Cost display (if locked) */}
           {!cat.unlocked && (
-            <div className="absolute bg-[#f9e39f] rounded-[30px] px-[13px] py-[13px] flex items-center gap-[10px] h-[44px]" style={{ left: "18px", top: "98px" }}>
-              <div className="relative shrink-0 size-[34px]">
+            <div style={{ position: 'absolute', backgroundColor: '#f9e39f', borderRadius: '30px', paddingLeft: '13px', paddingRight: '13px', paddingTop: '13px', paddingBottom: '13px', display: 'flex', alignItems: 'center', gap: '10px', height: '44px', left: '18px', top: '98px' }}>
+              <div style={{ position: 'relative', flexShrink: 0, width: '34px', height: '34px' }}>
                 <CoinIcon />
               </div>
-              <p className="font-bold text-[25px] text-black whitespace-nowrap">{cat.price}</p>
+              <p style={{ fontWeight: 'bold', fontSize: '25px', color: 'black', whiteSpace: 'nowrap' }}>{cat.price}</p>
             </div>
           )}
 
           {/* Gray overlay (if locked) */}
           {!cat.unlocked && (
-            <div className="absolute inset-0 bg-black opacity-40 rounded-[20px]" />
+            <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: 'black', opacity: 0.4, borderRadius: '20px' }} />
           )}
         </div>
 
         {/* Progress Bar Background */}
-        <div className="absolute bg-[#d9d9d9] h-[13px] left-[27.96px] rounded-[10px] top-[293px] w-[244px]" />
+        <div style={{ position: 'absolute', backgroundColor: '#d9d9d9', height: '13px', left: '27.96px', borderRadius: '10px', top: '293px', width: '244px' }} />
         {/* Progress Bar Fill */}
         <div
-          className="absolute h-[13px] left-[29px] rounded-[10px] top-[293px]"
           style={{
+            position: 'absolute',
+            height: '13px',
+            left: '29px',
+            borderRadius: '10px',
+            top: '293px',
             width: `${getHealthBarWidth(cat.health)}px`,
             backgroundColor: getHealthBarColor(cat.health),
           }}
@@ -138,17 +147,17 @@ export function Selector({ cats, currency, setCats, setCurrency, onCatClick }: S
   };
 
   return (
-    <div className="bg-[#fbebbb] relative w-full min-h-screen p-8">
+    <div style={{ backgroundColor: '#fbebbb', position: 'relative', width: '100%', minHeight: '100vh', padding: '32px' }}>
       {/* CURRENCY DISPLAY - Top Left Corner */}
-      <div className="absolute left-[9px] top-[11px] bg-[#f9e39f] rounded-[30px] px-[13px] py-[13px] flex items-center gap-[10px] h-[44px]">
-        <div className="relative shrink-0 size-[34px]">
+      <div style={{ position: 'absolute', left: '9px', top: '11px', backgroundColor: '#f9e39f', borderRadius: '30px', paddingLeft: '13px', paddingRight: '13px', paddingTop: '13px', paddingBottom: '13px', display: 'flex', alignItems: 'center', gap: '10px', height: '44px' }}>
+        <div style={{ position: 'relative', flexShrink: 0, width: '34px', height: '34px' }}>
           <CoinIcon />
         </div>
-        <p className="font-bold text-[25px] text-black whitespace-nowrap">{currency}</p>
+        <p style={{ fontWeight: 'bold', fontSize: '25px', color: 'black', whiteSpace: 'nowrap' }}>{currency}</p>
       </div>
 
       {/* CAT CARDS GRID - 3x2 Layout */}
-      <div className="absolute left-[75px] top-[61px] w-[1129px]">
+      <div style={{ position: 'absolute', left: '75px', top: '61px', width: '1129px' }}>
         {/* ROW 1 - Top Three Cats */}
         <CatCard cat={cats[0]} position={{ left: 0, top: 0 }} />
         <CatCard cat={cats[1]} position={{ left: 404, top: 0 }} />

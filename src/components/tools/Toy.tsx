@@ -2,8 +2,8 @@ import svgPaths from "../../imports/svg-xfnbgzbzvt";
 
 export function Toy() {
   return (
-    <div className="h-[140.003px] relative w-[107.8px]" data-name="Toy">
-      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 108 140">
+    <div style={{ height: '140.003px', position: 'relative', width: '107.8px' }} data-name="Toy">
+      <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 108 140">
         <g clipPath="url(#clip0_toy)" id="Toy">
           <path d={svgPaths.pf266d00} fill="var(--fill-0, #996A6E)" id="Vector" />
           <path d={svgPaths.p7e19340} fill="var(--fill-0, #F7BA7A)" id="Vector_2" />

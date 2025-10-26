@@ -3,7 +3,7 @@ import svgPaths from "../../imports/svg-3sda4a3juu";
 
 export function GingerCat() {
   return (
-    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 195 246">
+    <svg style={{ display: 'block', width: '100%', height: '100%' }} fill="none" preserveAspectRatio="none" viewBox="0 0 195 246">
       <g clipPath="url(#clip0_ginger)" id="ginger cat">
         <path d={svgPaths.p3301f800} fill="var(--fill-0, #F9A61F)" id="Vector" />
         <path d={svgPaths.p14a92e80} fill="var(--fill-0, #60594C)" id="Vector_2" />
